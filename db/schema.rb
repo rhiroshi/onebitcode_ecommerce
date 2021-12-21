@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_185803) do
     t.string "unconfirmed_email"
     t.string "name"
     t.string "email"
-    t.integer "profile_type_id", default: 1
+    t.integer "profile", default: 1
     t.json "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
