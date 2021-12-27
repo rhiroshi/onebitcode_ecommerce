@@ -26,6 +26,7 @@ module EcommerceObc
 
     config.i18n.default_locale = :'pt-BR' # Configura o locale padrão como pt-BR
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{.rb, .yml}')] # Adiciona locais para procurar os locales
+    config.autoload_paths += %W["#{config.root}/app/validators/"]
 
     config.api_only = true
 
