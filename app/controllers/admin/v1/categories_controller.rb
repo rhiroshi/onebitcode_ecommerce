@@ -4,6 +4,12 @@ module Admin::V1
       @categories = Category.all
     end
 
+    def update
+      @category = Category.find(params[:id])
+      @category.attributes = category_params
+      save_category!
+    end
+
     def create
       @category = Category.new
       @category.attributes = category_params
