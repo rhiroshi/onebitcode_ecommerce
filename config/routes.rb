@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :categories
       resources :coupons
       resources :system_requirements
+      resources :users
     end
   end
   namespace :storefront do
