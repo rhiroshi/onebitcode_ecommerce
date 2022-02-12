@@ -3,7 +3,7 @@ module Admin::V1
     before_action :load_user, only: [:update, :destroy]
 
     def index
-      @users = User.all
+      @users = load_users
     end
 
     def update
@@ -24,6 +24,11 @@ module Admin::V1
     end
 
     private
+
+    def load_users
+      permitted = params.permit({search: [:name, :email, :password, :password_confirmation, :profile]}, {order: {}}, :page, :length)
+      Admin::ModelLoadingService.new(User.all, permitted).call
+    end
 
     def load_user
       @user = User.find(params[:id])

@@ -34,7 +34,7 @@ RSpec.describe "Admin::V1::Categories as admin", type: :request do
 
       let(:search_params) { { search: { name: "Search" } } }
 
-      it "returns only seached categories limited by default pagination" do
+      it "returns only searched categories limited by default pagination" do
         get url, headers: auth_header(user), params: search_params
         expected_categories = search_name_categories[0..9].map do |category|
           category.as_json(only: %i(id name))

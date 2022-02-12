@@ -3,20 +3,20 @@ require 'rails_helper'
 RSpec.describe "Admin::V1::Users as admin", type: :request do
   let!(:auth_user) { create(:user) }
 
-  context "GET /categories" do
-    let(:url) { "/admin/v1/categories" }
-    let!(:categories) { create_list(:category, 10) }
+  context "GET /users" do
+    let(:url) { "/admin/v1/users" }
+    let!(:users) { create_list(:user, 10) }
 
     context "without any params" do
-      it "returns 10 Categories" do
+      it "returns 10 Users" do
         get url, headers: auth_header(auth_user)
-        expect(body_json['categories'].count).to eq 10
+        expect(body_json['users'].count).to eq 10
       end
 
-      it "returns 10 first Categories" do
+      it "returns 10 first Users" do
         get url, headers: auth_header(auth_user)
-        expected_categories = categories[0..9].as_json(only: %i(id name))
-        expect(body_json['categories']).to contain_exactly *expected_categories
+        expected_users = users[0..9].as_json(only: %i(email id name))
+        expect(body_json['users']).to contain_exactly *expected_users
       end
 
       it "returns success status" do
@@ -26,20 +26,20 @@ RSpec.describe "Admin::V1::Users as admin", type: :request do
     end
 
     context "with search[name] param" do
-      let!(:search_name_categories) do
-        categories = []
-        15.times { |n| categories << create(:category, name: "Search #{n + 1}") }
-        categories
+      let!(:search_name_users) do
+        users = []
+        15.times { |n| users << create(:user, name: "Search #{n + 1}") }
+        users
       end
 
       let(:search_params) { { search: { name: "Search" } } }
 
-      it "returns only seached categories limited by default pagination" do
+      it "returns only searched users limited by default pagination" do
         get url, headers: auth_header(auth_user), params: search_params
-        expected_categories = search_name_categories[0..9].map do |category|
-          category.as_json(only: %i(id name))
+        expected_users = search_name_users[0..9].map do |user|
+          user.as_json(only: %i(email id name))
         end
-        expect(body_json['categories']).to contain_exactly *expected_categories
+        expect(body_json['users']).to contain_exactly *expected_users
       end
 
       it "returns success status" do
@@ -56,13 +56,13 @@ RSpec.describe "Admin::V1::Users as admin", type: :request do
 
       it "returns records sized by :length" do
         get url, headers: auth_header(auth_user), params: pagination_params
-        expect(body_json['categories'].count).to eq length
+        expect(body_json['users'].count).to eq length
       end
 
-      it "returns categories limited by pagination" do
+      it "returns users limited by pagination" do
         get url, headers: auth_header(auth_user), params: pagination_params
-        expected_categories = categories[5..9].as_json(only: %i(id name))
-        expect(body_json['categories']).to contain_exactly *expected_categories
+        expected_users = users[5..9].as_json(only: %i(email id name))
+        expect(body_json['users']).to contain_exactly *expected_users
       end
 
       it "returns success status" do
@@ -73,12 +73,16 @@ RSpec.describe "Admin::V1::Users as admin", type: :request do
 
     context "with order params" do
       let(:order_params) { { order: { name: 'desc' } } }
-
-      it "returns ordered categories limited by default pagination" do
+      users = User.all.to_a
+      puts users.inspect
+      it "returns ordered users limited by default pagination" do
         get url, headers: auth_header(auth_user), params: order_params
-        categories.sort! { |a, b| b[:name] <=> a[:name]}
-        expected_categories = categories[0..9].as_json(only: %i(id name))
-        expect(body_json['categories']).to contain_exactly *expected_categories
+        users.sort! { |a, b| b[:name] <=> a[:name]}
+        expected_users = users[0..9].as_json(only: %i(email id name))
+        puts ''
+        puts body_json['users'].collect { |u| u['name']}.inspect
+        puts users.collect { |u| u['name']}.inspect
+        expect(body_json['users']).to contain_exactly *expected_users
       end
 
       it "returns success status" do
