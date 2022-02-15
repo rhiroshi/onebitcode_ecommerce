@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id               :bigint(8)        not null, primary key
+#  description      :text
+#  name             :string
+#  price            :decimal(10, 2)
+#  productable_type :string           not null
+#  status           :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  productable_id   :bigint(8)        not null
+#
+# Indexes
+#
+#  index_products_on_productable  (productable_type,productable_id)
+#
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
