@@ -7,7 +7,7 @@ module Admin
     end
 
     def call
-      @searchable_model.search_by_name(@params.dig(:search, :name))
+      @searchable_model.search(@params[:search])
                        .order(@params[:order].to_h)
                        .paginate((@params[:page] || 1).to_i, (@params[:length] || 10).to_i)
     end
