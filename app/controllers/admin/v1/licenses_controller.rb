@@ -3,7 +3,7 @@ module Admin::V1
     before_action :load_license, only: [:update, :destroy, :show]
 
     def index
-      @categories = load_licenses
+      @licenses = load_licenses
     end
 
     def show
@@ -33,13 +33,13 @@ module Admin::V1
     end
 
     def load_licenses
-      permitted = params.permit({search: :key}, {order: {}}, :page, :length)
+      permitted = params.permit({search: [:key, :game_id]}, {order: {}}, :page, :length)
       Admin::ModelLoadingService.new(License.all, permitted).call
     end
 
     def license_params
       return {} unless params.has_key?(:license)
-      params.require(:license).permit(:name)
+      params.require(:license).permit([:key, :game_id])
     end
 
     def save_license!

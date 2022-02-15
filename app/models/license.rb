@@ -22,7 +22,7 @@
 class License < ApplicationRecord
   validates :key, :game_id, presence: true
   belongs_to :game
-  belongs_to :user
+  belongs_to :user, optional: true
   include Searchable
   include Paginatable
 end
