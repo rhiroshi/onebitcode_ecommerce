@@ -21,8 +21,8 @@
 #
 FactoryBot.define do
   factory :license do
-    key { "MyString" }
-    game { "" }
-    user { "" }
+    key { SecureRandom.uuid }
+    game
+    user
   end
 end

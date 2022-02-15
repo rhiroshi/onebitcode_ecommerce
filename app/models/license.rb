@@ -20,4 +20,5 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class License < ApplicationRecord
+  validates :key, :game_id, presence: true
 end
