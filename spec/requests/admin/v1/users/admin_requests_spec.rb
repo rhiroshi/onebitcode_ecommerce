@@ -74,14 +74,10 @@ RSpec.describe "Admin::V1::Users as admin", type: :request do
     context "with order params" do
       let(:order_params) { { order: { name: 'desc' } } }
       users = User.all.to_a
-      puts users.inspect
       it "returns ordered users limited by default pagination" do
         get url, headers: auth_header(auth_user), params: order_params
-        users.sort! { |a, b| b[:name] <=> a[:name]}
+        users.sort! { |a, b| b[:name] <=> a[:name] }
         expected_users = users[0..9].as_json(only: %i(email id name))
-        puts ''
-        puts body_json['users'].collect { |u| u['name']}.inspect
-        puts users.collect { |u| u['name']}.inspect
         expect(body_json['users']).to contain_exactly *expected_users
       end
 

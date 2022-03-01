@@ -10,6 +10,6 @@ class Product < ApplicationRecord
   enum status: {available: 1, unavailable: 2}
 
   has_one_attached :image
-  include NameSearchable
+  include LikeSearchable
   include Paginatable
 end
