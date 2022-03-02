@@ -1,7 +1,7 @@
 class License < ApplicationRecord
   include Paginatable
   include LikeSearchable
-  
+
   belongs_to :game
   validates :key, presence: true, uniqueness: {case_sensitive: false, scope: :platform}
   validates :platform, presence: true

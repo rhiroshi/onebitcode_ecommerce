@@ -9,14 +9,14 @@ RSpec.describe "Admin::V1::Coupons as client", type: :request do
 
     before(:each) { get url, headers: auth_header(user) }
 
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "POST /coupons" do
     let(:url) { "/admin/v1/coupons" }
 
     before(:each) { post url, headers: auth_header(user) }
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "PATCH /coupons" do
@@ -24,13 +24,13 @@ RSpec.describe "Admin::V1::Coupons as client", type: :request do
     let(:url) { "/admin/v1/coupons/#{coupon.id}" }
 
     before(:each) { patch url, headers: auth_header(user) }
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "DELETE /coupons" do
     let(:coupon) { create(:coupon) }
     let(:url) { "/admin/v1/coupons/#{coupon.id}" }
     before(:each) { delete url, headers: auth_header(user) }
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 end
