@@ -345,7 +345,7 @@ RSpec.describe "Admin V1 Products as :admin", type: :request do
 
     context "with invalid :productable params" do
       let(:invalid_productable_params) do
-        { product: attributes_for(:game, developer: "") }
+        { product: attributes_for(:game, developer: nil) }.to_json
       end
 
       it 'does not update productable' do
@@ -447,5 +447,6 @@ def build_game_product_json(product)
   json['categories'] = product.categories.map(&:name)
   json['image_url'] = rails_blob_url(product.image)
   json['productable'] = product.productable_type.underscore
+  json['productable_id'] = product.productable_id
   json.merge product.productable.as_json(only: %i(mode release_date developer))
 end

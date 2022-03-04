@@ -10,23 +10,23 @@ RSpec.describe "Admin::V1::License as client", type: :request do
 
     before(:each) { get url, headers: auth_header(user) }
 
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "GET /games/:game_id/licenses/:id" do
     let!(:license) { create(:license, game: game) }
-    let(:url) { "/admin/v1/games/#{game.id}/licenses/#{license.id}" }
+    let(:url) { "/admin/v1/licenses/#{license.id}" }
 
     before(:each) { get url, headers: auth_header(user) }
 
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "POST /games/:game_id/licenses" do
     let(:url) { "/admin/v1/games/#{game.id}/licenses" }
 
     before(:each) { post url, headers: auth_header(user) }
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "PATCH /licenses" do
@@ -34,13 +34,13 @@ RSpec.describe "Admin::V1::License as client", type: :request do
     let(:url) { "/admin/v1/licenses/#{license.id}" }
 
     before(:each) { patch url, headers: auth_header(user) }
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 
   context "DELETE /licenses" do
     let(:license) { create(:license, game: game) }
     let(:url) { "/admin/v1/licenses/#{license.id}" }
     before(:each) { delete url, headers: auth_header(user) }
-    include_examples "forbidden_access"
+    include_examples "forbidden access"
   end
 end
