@@ -4,6 +4,7 @@
 #
 #  id               :bigint(8)        not null, primary key
 #  description      :text
+#  featured         :boolean          default(FALSE)
 #  name             :string
 #  price            :decimal(10, 2)
 #  productable_type :string           not null
@@ -23,6 +24,7 @@ FactoryBot.define do
     price { Faker::Commerce.price(range: 100.0..400.0) }
     image { Rack::Test::UploadedFile.new(Rails.root.join("spec/support/images/product_image.png")) }
     status { :available }
+    featured { true }
 
     after :build do |product|
       product.productable ||= create(:game)

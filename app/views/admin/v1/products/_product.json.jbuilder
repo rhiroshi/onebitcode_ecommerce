@@ -1,4 +1,4 @@
-json.(product, :id, :name, :description, :price)
+json.(product, :id, :name, :description, :price, :featured)
 json.status product.status
 json.categories product.categories.pluck(:name)
 json.image_url rails_blob_url(product.image)

@@ -4,6 +4,7 @@
 #
 #  id               :bigint(8)        not null, primary key
 #  description      :text
+#  featured         :boolean          default(FALSE)
 #  name             :string
 #  price            :decimal(10, 2)
 #  productable_type :string           not null
@@ -19,7 +20,7 @@
 class Product < ApplicationRecord
   belongs_to :productable, polymorphic: true
   validates :name, uniqueness: { case_sensitive: false }
-  validates :status, :image, :name, :price, :description, presence: true
+  validates :featured, :status, :image, :name, :price, :description, presence: true
   validates :price, numericality: { greater_than: 0 }
 
   has_many :product_categories, dependent: :destroy

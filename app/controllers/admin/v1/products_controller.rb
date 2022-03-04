@@ -40,7 +40,7 @@ module Admin::V1
 
     def product_params
       return {} unless params.has_key?(:product)
-      permitted_params = params.required(:product).permit(:id, :name, :description, :image, :price, :productable, :status, category_ids: [])
+      permitted_params = params.required(:product).permit(:id, :name, :description, :image, :price, :featured, :productable, :status, category_ids: [])
 
       permitted_params.merge(productable_params)
     end
